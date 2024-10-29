@@ -23,6 +23,12 @@ This project aims to simplify the extraction of data from web pages by convertin
 $ pip install git+https://github.com/bes-dev/gpt-scraper.git
 ```
 
+### Install from pip
+
+```bash
+$ pip install gpt-scraper
+```
+
 ## CLI Tool Usage
 
 ### Commands

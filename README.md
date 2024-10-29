@@ -89,7 +89,7 @@ $ gpt-scraper --url https://news.ycombinator.com/ --requirements 'extract thread
 ## Example
 
 ```python
-from gpt_scraper import GPTscraper
+from gpt_scraper import GPTScraper
 from gpt_scraper.selenium_utils import fetch_dynamic_page
 from pydantic import BaseModel
 

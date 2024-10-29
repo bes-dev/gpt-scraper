@@ -59,7 +59,7 @@ class GPTScraper:
         """
         llm_provider = ProviderOpenAI(model_name)
         if simplify_html:
-            page_source = preprocess_html_with_summary(
+            page_source, _ = preprocess_html_with_summary(
                 page_source,
                 remove_attributes=True,
                 minify=True,

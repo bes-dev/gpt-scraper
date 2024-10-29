@@ -1,8 +1,25 @@
+"""
+Copyright 2024 by Sergei Belousov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
 import argparse
 import json
 import logging
 from .gpt_scraper import GPTScraper
 from .selenium_utils import fetch_dynamic_page
+from .html_utils import preprocess_html_with_summary
 from pydantic import BaseModel
 
 def setup_logging():
@@ -29,6 +46,7 @@ def main():
     parser.add_argument('--wait-value', help='Value of the locator to wait for')
     parser.add_argument('--save-file', help='Path to save the created GPTScraper to file')
     parser.add_argument('--model-name', default='gpt-4o', help='Name of the model to use for scraping')
+    parser.add_argument('--simplify-html', action='store_true', help='Simplify the HTML content before parsing')
 
     args = parser.parse_args()
 
@@ -65,6 +83,15 @@ def main():
             return
     else:
         logger.info("Generating parser using GPTScraper.")
+        if args.simplify_html:
+            logger.info("Simplifying HTML content before parsing.")
+            page_source, _ = preprocess_html_with_summary(
+                page_source,
+                remove_attributes=True,
+                minify=True,
+                summarize=True,
+                max_sentences=1
+            )
         scraper = GPTScraper.from_html(
             page_source, args.requirements, model_name=args.model_name
         )

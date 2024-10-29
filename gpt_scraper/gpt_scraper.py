@@ -17,6 +17,7 @@ limitations under the License.
 import json
 from pydantic import BaseModel
 from .utils import *
+from .html_utils import preprocess_html_with_summary
 from .prompts import SCRAPER_GENERATOR_PROMPT, DATA_STRUCTURE_PROMPT
 
 class GPTScraper:
@@ -39,6 +40,7 @@ class GPTScraper:
             page_source: str,
             requirements: str,
             data_structure: BaseModel = None,
+            simplify_html: bool = False,
             model_name: str = "gpt-4o"
     ) -> "GPTScraper":
         """
@@ -48,12 +50,21 @@ class GPTScraper:
             page_source (str): The HTML content of the webpage.
             requirements (str): The user-defined requirements for scraping.
             data_structure (BaseModel, optional): An optional data structure for the output.
+            simplify_html (bool): Simplify HTML before processing.
             model_name (str): The model name to be used by the LLMProvider.
 
         Returns:
             GPTScraper: An instance of the GPTScraper class.
         """
         llm_provider = ProviderOpenAI(model_name)
+        if simplify_html:
+            page_source = preprocess_html_with_summary(
+                page_source,
+                remove_attributes=True,
+                minify=True,
+                summarize=True,
+                max_sentences=1
+            )
         # prepare prompt
         system_prompt = SCRAPER_GENERATOR_PROMPT.replace(
             "{{USER_REQUIREMENTS}}", requirements

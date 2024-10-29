@@ -19,7 +19,6 @@ import json
 import logging
 from .gpt_scraper import GPTScraper
 from .selenium_utils import fetch_dynamic_page
-from .html_utils import preprocess_html_with_summary
 from pydantic import BaseModel
 
 def setup_logging():
@@ -83,17 +82,11 @@ def main():
             return
     else:
         logger.info("Generating parser using GPTScraper.")
-        if args.simplify_html:
-            logger.info("Simplifying HTML content before parsing.")
-            page_source, _ = preprocess_html_with_summary(
-                page_source,
-                remove_attributes=True,
-                minify=True,
-                summarize=True,
-                max_sentences=1
-            )
         scraper = GPTScraper.from_html(
-            page_source, args.requirements, model_name=args.model_name
+            page_source,
+            args.requirements,
+            simplify_html=args.simplify_html,
+            model_name=args.model_name
         )
         if args.save_file:
             try:

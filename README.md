@@ -36,7 +36,7 @@ $ pip install gpt-scraper
 ```bash
 $ gpt-scraper --help
 usage: gpt-scraper [-h] (--requirements REQUIREMENTS | --scraper-file SCRAPER_FILE) --url URL [--output OUTPUT] [--wait-by {id,xpath,css_selector}] [--wait-value WAIT_VALUE]
-                   [--save-file SAVE_FILE] [--model-name MODEL_NAME] [--simplify-html]
+                   [--save-file SAVE_FILE] [--model-name MODEL_NAME] [--simplify-html] [--use-sandbox]
 
 GPT-Scraper CLI
 
@@ -57,6 +57,7 @@ options:
   --model-name MODEL_NAME
                         Name of the model to use for scraping
   --simplify-html       Simplify the HTML content before parsing
+  --use-sandbox         Use the sandboxed environment for parsing
 
 ```
 

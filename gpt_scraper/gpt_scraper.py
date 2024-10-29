@@ -19,6 +19,7 @@ from pydantic import BaseModel
 from .utils import *
 from .html_utils import preprocess_html_with_summary
 from .prompts import SCRAPER_GENERATOR_PROMPT, DATA_STRUCTURE_PROMPT
+from .sandbox import execute_sandboxed
 
 class GPTScraper:
     def __init__(self, source_code: str, data_structure: BaseModel = None):
@@ -129,17 +130,21 @@ class GPTScraper:
             source_code = f.read()
             return cls(source_code)
 
-    def parse_html(self, html: str):
+    def parse_html(self, html: str, use_sandbox: bool = True) -> list:
         """
         Parse the provided HTML string into a structured format.
 
         Args:
             html (str): The HTML content to be parsed.
+            use_sandbox (bool): Whether to use the sandboxed environment for parsing.
 
         Returns:
             list: A list of parsed data according to the data structure provided, if any.
         """
-        output = self.parse(html)
+        if use_sandbox:
+            output = execute_sandboxed(self.source_code, html)
+        else:
+            output = self.parse(html)
         if self.data_structure is not None:
             return [self.data_structure(**item) for item in output]
         return output

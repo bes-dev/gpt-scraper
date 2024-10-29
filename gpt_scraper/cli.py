@@ -46,6 +46,7 @@ def main():
     parser.add_argument('--save-file', help='Path to save the created GPTScraper to file')
     parser.add_argument('--model-name', default='gpt-4o', help='Name of the model to use for scraping')
     parser.add_argument('--simplify-html', action='store_true', help='Simplify the HTML content before parsing')
+    parser.add_argument('--use-sandbox', action='store_true', help='Use the sandboxed environment for parsing')
 
     args = parser.parse_args()
 
@@ -98,7 +99,7 @@ def main():
 
     logger.info("Parsing HTML content.")
     try:
-        data = scraper.parse_html(page_source)
+        data = scraper.parse_html(page_source, use_sandbox=args.use_sandbox)
     except Exception as e:
         logger.error(f"Error parsing HTML: {e}")
         return

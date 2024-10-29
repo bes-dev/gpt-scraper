@@ -62,7 +62,7 @@ options:
 ### Sample session
 
 ```bash
-$ gpt-scraper --url https://news.ycombinator.com/ --requirements 'extract threads list from the web page (extract link and title)' --save-file hn.json --model-name o1-mini
+$ gpt-scraper --url https://news.ycombinator.com/ --requirements 'extract threads list from the web page (extract link and title)' --save-file hn.py --model-name o1-mini
 2024-10-29 05:23:25,989 [INFO] Fetching page content from URL: https://news.ycombinator.com/
 2024-10-29 05:23:25,989 [INFO] Attempt 1 to fetch URL: https://news.ycombinator.com/
 2024-10-29 05:23:27,915 [INFO] Successfully fetched page source for URL: https://news.ycombinator.com/

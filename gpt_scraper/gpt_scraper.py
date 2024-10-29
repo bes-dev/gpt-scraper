@@ -86,7 +86,7 @@ class GPTScraper:
             path (str): The path to save the source code.
         """
         with open(path, "w") as f:
-            json.dump({"source_code": self.source_code}, f, indent=4)
+            f.write(self.source_code)
 
     @classmethod
     def load(cls, path: str) -> "GPTScraper":
@@ -100,8 +100,7 @@ class GPTScraper:
             GPTScraper: An instance of the GPTScraper class.
         """
         with open(path, "r") as f:
-            data = json.load(f)
-            source_code = data["source_code"]
+            source_code = f.read()
             return cls(source_code)
 
     def parse_html(self, html: str):

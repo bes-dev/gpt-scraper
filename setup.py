@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gpt_scraper',
-    version='0.3.1',
+    version='0.3.2',
     description='GPT-Scraper is an autonomous, LLM-based agent that generates code to extract structured information from web pages.',
     author='Sergei Belousov aka BeS',
     author_email='sergei.o.belousov@gmail.com',

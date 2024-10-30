@@ -20,7 +20,7 @@ import pydantic
 from pydantic import BaseModel
 import types
 from openai import OpenAI
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, get_origin, get_args
 
 
 def parser_from_text(source_code: str) -> types.FunctionType:
@@ -60,6 +60,27 @@ def extract_code_block(text: str, language: str = "python") -> Optional[str]:
             code = block[len(language):].strip()
             return code
     return None
+
+
+def type_to_str(tp):
+    """
+    Converts a type annotation to a readable string.
+    Handles generic types like List[int], Optional[str], etc.
+    """
+    origin = get_origin(tp)
+    args = get_args(tp)
+
+    if origin is None:
+        return tp.__name__ if isinstance(tp, type) else str(tp)
+    elif origin is list:
+        return f"List[{type_to_str(args[0])}]"
+    elif origin is dict:
+        return f"Dict[{type_to_str(args[0])}, {type_to_str(args[1])}]"
+    elif origin is Union:
+        # Handle Optional and Union types
+        return " | ".join(type_to_str(arg) for arg in args)
+    else:
+        return str(tp)
 
 
 def data_structure_to_str(model: BaseModel) -> str:

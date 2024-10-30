@@ -115,3 +115,13 @@ scraper = GPTScraper.from_html(
 data = scraper.parse_html(page_source)
 print(data)
 ```
+
+
+# Disclaimer
+This application assists users in generating code with AI.
+While a sandbox environment with limited system access is provided for added security, we cannot guarantee complete protection.
+We strongly recommend executing all generated code within the provided sandbox environment to help minimize potential risks.
+However, users should not rely on the sandbox as an absolute security measure.
+
+The development team is not liable for any consequences resulting from the generated code, including system damage, data loss, or any incurred losses.
+By using this application, you acknowledge and accept all risks associated with the generated code and assume full responsibility for any potential impact on your system.

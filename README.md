@@ -112,7 +112,7 @@ scraper = GPTScraper.from_html(
     data_structure=Data,
     model_name="o1-mini"
 )
-data = scraper.parse_html(page_source)
+data = scraper.parse_html(page_source, use_sandbox=True)
 print(data)
 ```
 
